@@ -1,0 +1,39 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package networkprogramming;
+
+import java.io.*;
+
+/**
+ *
+ * @author user
+ */
+public class FindPassStudent {
+
+    public static void main(String[] args) throws IOException {
+        InputStreamReader read = new InputStreamReader(System.in);
+        BufferedReader buf = new BufferedReader(read);
+        System.out.println("Enetr File Name : ");
+        String FileName = buf.readLine(); // read File Name From user 
+        FileReader readContent = new FileReader("c://test/" + FileName + ".txt");
+        BufferedReader bufr = new BufferedReader(readContent);
+        String Line;
+        PrintWriter print = new PrintWriter(new FileWriter("c://test/pass.txt") , true); // true -> auto flush 
+        int sum ;
+         String par[];
+        while ((Line = bufr.readLine()) != null) {
+           par = Line.split(" "); // Ghaida 25 24 49 
+            sum = 0 ; 
+            for (int i = 1; i < par.length; i++) {
+                sum += Integer.parseInt(par[i]); // calculate summation 
+            }
+            if (sum >= 50) {
+                print.println(par[0] + "\t" + sum);
+            }
+        }
+       // print.flush();
+
+    }
+}
