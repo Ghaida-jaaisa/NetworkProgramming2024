@@ -1,0 +1,34 @@
+package networkprogramming;
+
+import java.io.*;
+import java.util.Scanner;
+
+public class Test1 {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws IOException {
+InputStreamReader read = new InputStreamReader(System.in);
+BufferedReader bufr = new BufferedReader (read);
+        System.out.println("File Name 1 : ");
+String FileName1 = bufr.readLine(); 
+        System.out.println("File Name 2: ");
+
+String FileName2 = bufr.readLine(); 
+String data;
+BufferedWriter write = new BufferedWriter(new FileWriter ("c://test/neww.txt"));
+bufr = new BufferedReader (new FileReader ("c://test/" + FileName1 + ".txt"));
+while ((data=bufr.readLine())!= null){
+    write.write(data);
+}  
+write.flush();
+write.write("---------\n");
+bufr = new BufferedReader (new FileReader ("c://test/" + FileName2 + ".txt"));
+while ((data=bufr.readLine())!= null){
+    write.write(data);
+}    
+ write.flush();
+        
+    }
+}
