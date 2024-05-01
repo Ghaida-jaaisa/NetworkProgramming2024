@@ -1,0 +1,58 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package networkprogramming;
+
+import java.io.*;
+
+class Test extends Thread {
+
+    private int sum = 0;
+    String n;
+
+    Test(String n) {
+        this.n = n;
+    }
+
+    int getSum() {
+        return sum;
+    }
+
+    public void run() {
+        String data;
+        try {
+            FileReader file = new FileReader(n);
+            BufferedReader bufr = new BufferedReader(file);
+             synchronized (System.out) {
+                 System.out.print(n + ": ");
+            while ((data = bufr.readLine()) != null) {
+                sum += Integer.parseInt(data);
+            }
+            System.out.println(this.getName() + "  : " + sum);
+            }
+             
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+/**
+ *
+ * @author user
+ */
+public class FindSummationFromFiles {
+
+    public static void main(String[] args) {
+        Test thr1 = new Test("c://test/file.txt");
+        Test thr2 = new Test("c://test/file2.txt");
+        Test thr3 = new Test("c://test/file3.txt");
+
+        thr1.start();
+        thr2.start();
+        thr3.start();
+        
+
+    }  
+}
