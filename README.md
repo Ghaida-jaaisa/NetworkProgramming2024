@@ -14,3 +14,9 @@ note : use either printwriter or printstream class
 ## CalculateSummationFromFilesUsingThread
 ### Using_CALLBACK 
 The program have to calculate the summation of numbers stored in file , each working thread  have to calcualte the summation from different file , all process are doing at  the same time
+
+## MaxOfArray
+### Using Callable interface
+  Task : Using callabe interface  , create 2 threads each one have to find the maximum element in array ,   
+    give the first half of the array to the first thread and the other half to the second  
+    use : ExecutorsService class and future 
