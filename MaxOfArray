@@ -1,0 +1,77 @@
+
+package networkprogramming;
+
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.Random;
+
+/**
+ *
+ * @author user
+ */
+class Testing implements Callable<Integer> {
+
+    private int start, end;
+    private int maximum ;
+    private int size;
+    private int arr[];
+
+    public Testing(int arr[], int start, int end) {
+        this.arr = arr;
+        this.start = start;
+        this.end = end;
+        maximum = arr[start];
+    }
+
+    @Override
+    public Integer call() {
+
+        for (int i = start; i < end; i++) {
+           if(arr[i] > maximum ) maximum=arr[i];
+        }       
+        return maximum ;
+
+    }
+
+}
+
+public class MaxOfArray {
+     /* 
+    7/5/2024 
+    Task : Using callabe interface  , create 2 threads each one have to find the maximum element in array ,   
+    give the first half of the array to the first thread and the other half to the second  
+    use : ExecutorsService class and future 
+
+     -----------------------------------------------------------------
+    | Thread 1 havo to find max     |      Thread 1 havo to find  max |
+    |   element in this half        |        element in this half     |       
+    |         of array              |        of array                 |
+    ------------------------------------------------------------------
+*/
+    public static void main(String[] args) throws Exception {
+        InputStreamReader read = new InputStreamReader(System.in);
+        BufferedReader bufr = new BufferedReader(read);
+        System.out.println("Please enter the size of array ");
+        int size = Integer.parseInt(bufr.readLine());
+
+        int arr[] = new int[size];
+
+        for (int j = 0; j < size; j++) {
+            arr[j] = (int) (Math.random() * 20);
+            System.out.print(arr[j] + " ");
+        }
+        System.out.println("\n");
+        Testing obj1 = new Testing(arr, 0, size / 2);
+        Testing obj2 = new Testing(arr, size / 2, size);
+
+        ExecutorService service = Executors.newFixedThreadPool(2);
+        Future<Integer> v1 = service.submit(obj1);
+        Future<Integer> v2 = service.submit(obj2);
+        System.out.println(v1.get());
+        System.out.println(v2.get());
+        service.shutdown();
+
+    }
+
+}
