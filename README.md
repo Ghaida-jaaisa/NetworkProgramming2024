@@ -20,8 +20,4 @@ The program have to calculate the summation of numbers stored in file , each wor
   Task : Using callabe interface  , create 2 threads each one have to find the maximum element in array ,   
     give the first half of the array to the first thread and the other half to the second  
     use : ExecutorsService class and future 
-        -----------------------------------------------------------------
-    | Thread 1 havo to find max     |      Thread 1 havo to find  max |
-    |   element in this half        |        element in this half     |       
-    |         of array              |        of array                 |
-    ------------------------------------------------------------------
+
