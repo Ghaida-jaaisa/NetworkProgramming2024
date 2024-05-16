@@ -1,0 +1,93 @@
+
+package networkprogramming;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.concurrent.*;
+
+class Test implements Callable<ArrayList<String>> {
+
+    ArrayList<String> FileNames;
+    private int size;
+    BufferedReader bufr ;
+
+    public Test() {
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public ArrayList<String> call() {
+        String fileName;
+        try {
+            FileNames = new ArrayList<>();
+            bufr =  new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Enter number of files ");  
+            size = Integer.parseInt(bufr.readLine());
+           // synchronized (bufr) {
+                for (int i = 0 ; i < size; i++) {
+                    System.out.println("Enter file name " + (i + 1));
+                    fileName = bufr.readLine();
+                    FileNames.add(fileName);
+                }
+           // } 
+            return FileNames;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+}
+
+class Group2 implements Callable<Integer> {
+
+    String fileName;
+
+    Group2(String fileName) {
+        this.fileName = fileName;
+    }
+
+    @Override
+    public Integer call() {
+        try {
+            String data;
+            int sum = 0;
+            BufferedReader bufr = new BufferedReader(new FileReader("D:\\" + fileName + ".txt"));
+            while ((data = bufr.readLine()) != null) {
+                sum += Integer.parseInt(data);
+            }
+            return sum;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
+}
+
+public class CalculateSumUsingCallableInterface {
+
+    public static void main(String[] args) throws Exception {
+        Test thread = new Test();
+        ExecutorService service = Executors.newFixedThreadPool( 1);
+        Future<ArrayList<String>> vv = service.submit(thread);
+        System.out.println(vv.get());
+        ArrayList<String> files = vv.get();  
+        int size = files.size();
+        service.shutdown();
+    ExecutorService service2 = Executors.newFixedThreadPool(size);
+Group2 obj ; 
+Future<Integer> v; 
+        for (int i = 0; i < size; i++) {
+            obj = new Group2(files.get(i));
+             v = service2.submit(obj);
+            System.out.println(v.get());
+        }
+        
+        service2.shutdown();
+    }
+
+}
