@@ -21,3 +21,6 @@ The program have to calculate the summation of numbers stored in file , each wor
     give the first half of the array to the first thread and the other half to the second  
     use : ExecutorsService class and future 
 
+## CalculateSumUsingCallableInterface
+### Task : The main have to create thread return arraylist of files name to main , then main have to create group of thread each thread recieve file name then calculate summaion of number inside this files , print summations on screen.
+
