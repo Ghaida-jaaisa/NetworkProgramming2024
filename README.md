@@ -24,3 +24,5 @@ The program have to calculate the summation of numbers stored in file , each wor
 ## CalculateSumUsingCallableInterface
 ### Task : The main have to create thread return arraylist of file names to main , then main have to create group of threads each thread recieve file name then calculate summaion of numbers inside this files , print summations on screen.
 
+## ReadDomainsFromFile
+### Task : The main have to open text file named Domain.txt then read all file , each line has different domain name give each domain to thread , where # of threads equal to # of entries in file . each thread have to generate DNS resolution IN PARALLEL with other thread, then print IP on screen .
