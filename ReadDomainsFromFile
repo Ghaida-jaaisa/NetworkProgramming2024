@@ -1,0 +1,44 @@
+package networkprogramming;
+import java.io.*;
+import java.net.*;
+import java.util.ArrayList;
+class Domain extends Thread{
+    String domain ; 
+    public Domain(String domain ) {
+        this.domain=domain ;
+    }
+    public void run(){
+        try {
+            InetAddress address[] = InetAddress.getAllByName(domain);
+            for (InetAddress obj:address){
+                System.out.println("Domain : " + domain + "\t Have IP equal to : " + obj.getHostAddress() );
+            }
+            
+        } catch (Exception ex) {
+ex.printStackTrace();        
+        }
+           }
+}
+public class ReadDomainsFromFile {
+
+    /* 14/5/2024 : 
+    Task : The main have to open text file named Domain.txt , then reads all files ,
+    each line has a different domain name , give each domain to thread , 
+    where # of threads equal to # of entries in file ,
+    each thread have to generate DNS resolution IN PARALLEL with other threads , then ptint IP on screen */
+    public static void main(String[] args) throws Exception{
+        String fileName = "d://Domains.txt";
+        ArrayList<Thread> threads = new ArrayList<Thread>();
+     ArrayList<String> domains = new ArrayList<String>();
+     String domain ; 
+        BufferedReader bufr = new BufferedReader(new FileReader(fileName));
+     while ((domain=bufr.readLine())!= null)
+         domains.add(domain);
+          for(String d : domains){
+         threads.add(new Thread(new Domain(d)));
+     }
+     for(Thread thread:threads){
+         thread.start();
+     }
+         }
+         }
