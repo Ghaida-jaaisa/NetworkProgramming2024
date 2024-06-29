@@ -28,4 +28,7 @@ The program have to calculate the summation of numbers stored in file , each wor
 ### Task : The main have to open text file named Domain.txt then read all file , each line has different domain name give each domain to thread , where # of threads equal to # of entries in file . each thread have to generate DNS resolution IN PARALLEL with other thread, then print IP on screen .
 
 ## Translate 
-### Task : According to socket example (Socket.java) , create txt file names words , store group of English words , the main thread have to read the file , and stored words in arraylist , then initiate threads equal to # of words , where each thread recieve one word , then store english and arabic word in new file .  
+### Task : According to socket example (Socket.java) , create txt file names words , store group of English words , the main thread have to read the file , and stored words in arraylist , then initiate threads equal to # of words , where each thread recieve one word , then store english and arabic word in new file .  [Using Thread Class]
+
+## Translate1 
+### Task : According to socket example (Socket.java) , create txt file names words , store group of English words , the main thread have to read the file , and stored words in arraylist , then initiate threads equal to # of words , where each thread recieve one word , then return it's arabic translate to main , the main have to store each english word with arabic translate in new txt file
