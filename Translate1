@@ -1,0 +1,63 @@
+package networkprogramming;
+import java.io.*;
+import java.net.*;
+import java.util.*;
+import java.util.concurrent.*;
+
+class Translate1 implements Callable<String> {
+
+    String word;
+
+    public Translate1(String word) {
+        this.word = word;
+    }
+    @Override
+    public String call() throws Exception {
+        Socket sock = new Socket("dict.org", 2628);
+        BufferedReader bufr = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+        BufferedWriter bufw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+        bufw.write("DEFINE fd-eng-ara " + word + "\r\n");
+        bufw.flush();
+        String data;
+        int index = 0;
+        synchronized (System.out) {
+            while ((data = bufr.readLine()) != null && !data.contains("250")) {
+                index++;
+                if (index == 5) {
+                    sock.shutdownOutput();
+                    return "Word : " + word + "\tTranslate : " + data + "\n";
+                }
+            }
+
+        }
+        return null;
+    }
+}
+public class NewClass1 {
+
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader bufr = new BufferedReader(new FileReader("d://words.txt"));
+        PrintWriter writer = new PrintWriter(new FileWriter("d://new_words1.txt"), true);
+
+        ArrayList<String> words = new ArrayList<String>();
+        String data;
+        while ((data = bufr.readLine()) != null) {
+            words.add(data);
+        }
+        ExecutorService service = Executors.newFixedThreadPool(words.size());
+        // ArrayList<Future> v = new ArrayList<Future>();
+        ArrayList<String> newWords = new ArrayList<String>();
+        for (var w : words) {
+            var v = service.submit(new Translate1(w));
+            newWords.add(v.get());
+        }
+
+        for (var n : newWords) {
+            writer.print(n);
+        }
+        writer.flush();
+
+        service.shutdown();
+    }
+}
