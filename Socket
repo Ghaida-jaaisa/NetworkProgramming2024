@@ -1,1 +1,14 @@
+public class TestSocket {
 
+    public static void main(String[] args) throws Exception {
+        Socket sock = new Socket("dict.org", 2628);
+        BufferedReader bufr = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+        BufferedWriter bufw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+        bufw.write("DEFINE fd-eng-ara book\r\n");
+        bufw.flush();
+        String data;
+        while ((data = bufr.readLine()) != null && !data.contains("250")) {
+            System.out.println(data);
+        }
+    }
+}
