@@ -1,1 +1,55 @@
+package networkprogramming;
 
+import java.io.*;
+import java.net.*;
+import java.util.*;
+
+class Translate extends Thread {
+
+    String word;
+
+    public Translate(String word) {
+        this.word = word;
+    }
+
+    @Override
+    public void run() {
+        try {
+            Socket sock = new Socket("dict.org", 2628);
+            BufferedReader bufr = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            BufferedWriter bufw = new BufferedWriter(new OutputStreamWriter(sock.getOutputStream()));
+            PrintWriter writer = new PrintWriter(new FileWriter("d://new_words.txt", true), true);
+            bufw.write("DEFINE fd-eng-ara " + word + "\r\n");
+            bufw.flush();
+            String data;
+            int index = 0;
+            synchronized (System.out) {
+                while ((data = bufr.readLine()) != null && !data.contains("250")) {
+                    index++;
+                    if (index == 5) {
+                        writer.print("Word : " + word + "\tTranslate : " + data + "\n");
+                        writer.flush();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+public class NewClass {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader bufr = new BufferedReader(new FileReader("d://words.txt"));
+        ArrayList<String> words = new ArrayList<String>();
+        String data;
+        while ((data = bufr.readLine()) != null) {
+            words.add(data);
+        }
+        for (var w : words) {
+            new Thread(new Translate(w)).start();
+        }
+    }
+}
